@@ -6,7 +6,7 @@
 /*   By: hporta-c <hporta-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 14:59:50 by hporta-c          #+#    #+#             */
-/*   Updated: 2025/06/12 17:40:26 by hporta-c         ###   ########.fr       */
+/*   Updated: 2025/06/13 14:06:24 by hporta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,17 @@ char    *ft_strjoin(char *s1, char *s2)
         return (NULL);
     i = 0;
     while (s1[i])
-        res[i++] = s1[i++];
+    {
+        res[i] = s1[i];
+        i++;
+    }
     j = 0;
     while (s2[j])
-        res[i++] = s2[j++];
+    {
+        res[i] = s2[j];
+        i++;
+        j++;
+    }
     res[i] = '\0';
     return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: hporta-c <hporta-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:49:17 by hporta-c          #+#    #+#             */
-/*   Updated: 2025/06/12 16:52:01 by hporta-c         ###   ########.fr       */
+/*   Updated: 2025/06/13 11:40:23 by hporta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ char    **find_sign_then_split(char *str)
     while (str[i])
     {
         if (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-            ft_split(str, str[i]);
+            res = ft_split(str, str[i]);
         else if (str[i] == ':')
-            ft_split(str, str[i]);
+            res = ft_split(str, str[i]);
         i++;
     }
     return (res);
@@ -55,14 +55,22 @@ int if_slash(char *str)
     return (count);
 }
 
-int ft_strcmp(char *s1, char *s2)
+int ft_strncmp(char *s1, char *s2, size_t n)
 {
-    while (*s1 && *s2 && *s1 == *s2)
+    size_t  i;
+
+    i = 0;
+    while (*s1 && *s2 && i < n)
     {
+        if (*s1 != *s2)
+            return ((unsigned char)*s1 - (unsigned char)*s2);
         s1++;
         s2++;
+        i++;
     }
-    return ((unsigned char)*s1 - (unsigned char)*s2);
+    if (i < n)
+        return ((unsigned char)*s1 - (unsigned char)*s2);
+    return (0);
 }
 
 void    free_split(char **str)

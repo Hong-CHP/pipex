@@ -6,7 +6,7 @@
 /*   By: hporta-c <hporta-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 16:49:16 by hporta-c          #+#    #+#             */
-/*   Updated: 2025/06/12 17:42:37 by hporta-c         ###   ########.fr       */
+/*   Updated: 2025/06/13 11:35:00 by hporta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ pid_t	make_pipe_child1(int infile, char *cmd1, char **ev, int pipefd[])
 		dup2(pipefd[1], 1);
 		close(pipefd[1]);
 		args = find_sign_then_split(cmd1);
+		if (!args || !args[0])
+		{
+			fprintf(stderr, "Invalid command: %s\n", cmd1);
+			exit(127);
+		}
+		fprintf(stderr, "Executing cmd1: %s\n", cmd1);
 		exe_cmd(cmd1, args, ev);
 	}
 	return (pid);
@@ -49,6 +55,12 @@ pid_t	make_pipe_child2(int outfile, char *cmd2, char **ev, int pipefd[])
 		dup2(outfile, 1);
 		close(outfile);
 		args = find_sign_then_split(cmd2);
+			if (!args || !args[0])
+		{
+			fprintf(stderr, "Invalid command: %s\n", cmd2);
+			exit(127);
+		}
+		fprintf(stderr, "Executing cmd2: %s\n", cmd2);
 		exe_cmd(cmd2, args, ev);
 	}
 	return (pid);

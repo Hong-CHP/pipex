@@ -6,7 +6,7 @@
 /*   By: hporta-c <hporta-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:29:38 by hporta-c          #+#    #+#             */
-/*   Updated: 2025/06/12 18:47:21 by hporta-c         ###   ########.fr       */
+/*   Updated: 2025/06/13 10:44:00 by hporta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,15 @@ int check_access(char *infile, char *outfile)
         perror("Infile has not read permission");
         return (-1);
     }
-    if (access(outfile, F_OK) == -1)
-    {
-        if ((access(extract_dir(outfile), W_OK) == -1))
-        {
-            free(extract_dir(outfile));
-            perror("Cannot creat outfile in current directory");
-            return (-1);
-        }
-    }
+    // if (access(outfile, F_OK) == -1)
+    // {
+    //     if ((access(extract_dir(outfile), W_OK) == -1))
+    //     {
+    //         free(extract_dir(outfile));
+    //         perror("Cannot creat outfile in current directory");
+    //         return (-1);
+    //     }
+    // }
     if (access(outfile, F_OK) == 0 && access(outfile, W_OK) == -1)
     {
         perror("Outfile permission denied");

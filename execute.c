@@ -6,7 +6,7 @@
 /*   By: hporta-c <hporta-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:40:13 by hporta-c          #+#    #+#             */
-/*   Updated: 2025/06/12 17:30:09 by hporta-c         ###   ########.fr       */
+/*   Updated: 2025/06/13 14:09:09 by hporta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ char    **extract_path(char **ev)
     i = 0;
     while (ev[i])
     {
-        if (ft_strcmp("PATH=", ev[i]) == 0)
+        if (ft_strncmp("PATH=", ev[i], 5) == 0)
+        {
+            fprintf(stderr, "ev_path is : %s\n", ev[i]);
             return (find_sign_then_split(ev[i] + 5));
+        }
         i++;
     }
     return (NULL);
@@ -49,9 +52,11 @@ char    *find_exe_path(char *cmd, char **args, char **ev)
         }
         else
             path = ft_strjoin(ev_path[i], args[0]);
+        fprintf(stderr, "path is : %s\n", path);
         if (access(path, X_OK) == 0)
         {
             exe_path = ft_strdup(path);
+            fprintf(stderr, "exe_path is : %s\n", exe_path);
             free(path);
             free_split(ev_path);
             return (exe_path);
@@ -67,6 +72,7 @@ void    exe_cmd(char *cmd, char **args, char **ev)
 {
     char    *exe_path;
 
+    fprintf(stderr, "lol\n");
     if (if_slash(cmd) > 1)
     {
         if (access(cmd, X_OK) == 0)        
@@ -89,6 +95,6 @@ void    exe_cmd(char *cmd, char **args, char **ev)
     execve(exe_path, args, ev);
     perror("No vailable path");
     free(exe_path);
-    free(args);
+    free_split(args);
     exit(1);
 }
