@@ -6,7 +6,7 @@
 /*   By: hporta-c <hporta-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 16:42:38 by hporta-c          #+#    #+#             */
-/*   Updated: 2025/06/12 15:23:27 by hporta-c         ###   ########.fr       */
+/*   Updated: 2025/06/15 12:29:44 by hporta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,22 @@ int	count_words(char *str, char c)
 	return (count);
 }
 
-char	*allocate_copy_tab(int word_len, char *str)
+char	*allocate_copy_tab(int word_len, char *str, char **tab, int *tab_i)
 {
 	char	*word;
 	int		i;
 
 	word = (char *)malloc((word_len + 1) * sizeof(char));
 	if (!word)
+	{
+		while (*tab_i >= 0)
+		{
+			free(tab[*tab_i]);
+			*tab_i--;
+		}
+		free(tab);
 		return (NULL);
+	}
 	i = 0;
 	while (i < word_len)
 	{
@@ -76,7 +84,7 @@ char	**ft_fill_split(char **tab, char *str, char c, int *tab_i)
 		{
 			if (word_len > 0)
 			{
-				tab[*tab_i] = allocate_copy_tab(word_len, &str[i - word_len]);
+				tab[*tab_i] = allocate_copy_tab(word_len, &str[i - word_len], tab, tab_i);
 				(*tab_i)++;
 				word_len = 0;
 			}
@@ -86,7 +94,7 @@ char	**ft_fill_split(char **tab, char *str, char c, int *tab_i)
 		i++;
 	}
 	if (word_len > 0)
-		tab[(*tab_i)++] = allocate_copy_tab(word_len, &str[i - word_len]);
+		tab[(*tab_i)++] = allocate_copy_tab(word_len, &str[i - word_len], tab, tab_i);
 	tab[*tab_i] = NULL;
 	return (tab);
 }

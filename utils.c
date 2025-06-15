@@ -6,7 +6,7 @@
 /*   By: hporta-c <hporta-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:49:17 by hporta-c          #+#    #+#             */
-/*   Updated: 2025/06/13 11:40:23 by hporta-c         ###   ########.fr       */
+/*   Updated: 2025/06/15 15:04:49 by hporta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,26 @@ char    **find_sign_then_split(char *str)
 {
     int i;
     char    **res;
+    char    sep;
     
+    sep = 0;
     i = 0;
     while (str[i])
     {
         if (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-            res = ft_split(str, str[i]);
+        {
+            sep = str[i];
+            break;
+        }
         else if (str[i] == ':')
-            res = ft_split(str, str[i]);
+        {
+            sep = str[i];
+            break;
+        }
         i++;
     }
+    if (sep != 0)
+        res = ft_split(str, sep);
     return (res);
 }
 
@@ -78,11 +88,12 @@ void    free_split(char **str)
     int i;
 
     i = 0;
+    if (!str)
+        return ;
     while (str[i])
     {
         free(str[i]);
         i++;
     }
     free(str);
-    str = NULL;
 }

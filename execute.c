@@ -6,7 +6,7 @@
 /*   By: hporta-c <hporta-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:40:13 by hporta-c          #+#    #+#             */
-/*   Updated: 2025/06/13 14:09:09 by hporta-c         ###   ########.fr       */
+/*   Updated: 2025/06/15 15:12:54 by hporta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,22 @@
 char    **extract_path(char **ev)
 {
     int i;
-
+	char	**paths;
+	
     i = 0;
     while (ev[i])
     {
         if (ft_strncmp("PATH=", ev[i], 5) == 0)
-        {
-            fprintf(stderr, "ev_path is : %s\n", ev[i]);
-            return (find_sign_then_split(ev[i] + 5));
-        }
+		{
+			paths = find_sign_then_split(ev[i] + 5);
+            return (paths);
+		}
         i++;
     }
     return (NULL);
 }
 
-//split is allocated, need to be free after
-//strjoin is allocated, need to be free after
-//malloc
-char    *find_exe_path(char *cmd, char **args, char **ev)
+char    *find_exe_path(char **args, char **ev)
 {
     char    *path;
     char    *exe_path;
@@ -40,39 +38,44 @@ char    *find_exe_path(char *cmd, char **args, char **ev)
     char    *temp;
     int i;
 
+    path = NULL;
+    temp = NULL;
+    exe_path = NULL;
     ev_path = extract_path(ev);
+    if (!ev_path)
+        return (NULL);
     i = 0;
     while (ev_path[i])
     {
-        if (if_slash(cmd) < 1)
+        temp = ft_strjoin("/", args[0]);
+		if (!temp)
+		{
+			free_split(ev_path);
+			return (NULL);
+		}
+        path = ft_strjoin(ev_path[i], temp);
+        free(temp);
+        if (path)
         {
-            temp = ft_strjoin("/", args[0]);
-            path = ft_strjoin(ev_path[i], temp);
-            free(temp);
+            if (access(path, X_OK) == 0)
+			{
+                exe_path = ft_strdup(path);
+				free(path);
+				break;
+			}
+			free(path);
         }
-        else
-            path = ft_strjoin(ev_path[i], args[0]);
-        fprintf(stderr, "path is : %s\n", path);
-        if (access(path, X_OK) == 0)
-        {
-            exe_path = ft_strdup(path);
-            fprintf(stderr, "exe_path is : %s\n", exe_path);
-            free(path);
-            free_split(ev_path);
-            return (exe_path);
-        }
-        free(path);
         i++;
     }
     free_split(ev_path);
-    return (NULL);
+    return (exe_path);
 }
 
 void    exe_cmd(char *cmd, char **args, char **ev)
 {
     char    *exe_path;
 
-    fprintf(stderr, "lol\n");
+    exe_path = NULL;
     if (if_slash(cmd) > 1)
     {
         if (access(cmd, X_OK) == 0)        
@@ -80,15 +83,17 @@ void    exe_cmd(char *cmd, char **args, char **ev)
         else
         {
             perror("Error");
+            free_split(args);
             exit(1);
         }
     }
     else
     {
-        exe_path = find_exe_path(cmd, args, ev);
+        exe_path = find_exe_path(args, ev);
         if (!exe_path)
         {
             perror("Error");
+            free_split(args);
             exit(1);
         }
     }

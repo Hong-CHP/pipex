@@ -6,7 +6,7 @@
 /*   By: hporta-c <hporta-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 14:59:50 by hporta-c          #+#    #+#             */
-/*   Updated: 2025/06/13 14:06:24 by hporta-c         ###   ########.fr       */
+/*   Updated: 2025/06/15 11:06:08 by hporta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ char    *ft_strdup(char *src)
         return (NULL);
     i = 0;
     while (src[i])
-        dst[i++] = src[i++];
+    {
+        dst[i] = src[i];
+        i++;
+    }
     dst[i] = '\0';
     return (dst);
 }

@@ -6,40 +6,40 @@
 /*   By: hporta-c <hporta-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:29:38 by hporta-c          #+#    #+#             */
-/*   Updated: 2025/06/13 10:44:00 by hporta-c         ###   ########.fr       */
+/*   Updated: 2025/06/15 14:26:49 by hporta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char    *extract_dir(char *file)
-{
-    char    *ext_name;
-    int    slash;
-    int i;
+// char    *extract_dir(char *file)
+// {
+//     char    *ext_name;
+//     int    slash;
+//     int i;
 
-    slash = ft_strlen(file) - 1;
-    while(slash >= 0 && file[slash] != '/')
-        slash--;
-    if (slash < 0)
-        return (ft_strdup("."));
-    else if (slash == 0)
-        return (ft_strdup("/"));
-    else
-    {
-        ext_name = malloc(sizeof(char) * (slash + 1));
-        if (!ext_name)
-            return (NULL);
-        i = 0;
-        while (i < slash)
-        {
-            ext_name[i] = file[i];
-            i++;
-        }
-        ext_name[i] = '\0';
-    }
-    return (ext_name);
-}
+//     slash = ft_strlen(file) - 1;
+//     while(slash >= 0 && file[slash] != '/')
+//         slash--;
+//     if (slash < 0)
+//         return (ft_strdup("."));
+//     else if (slash == 0)
+//         return (ft_strdup("/"));
+//     else
+//     {
+//         ext_name = malloc(sizeof(char) * (slash + 1));
+//         if (!ext_name)
+//             return (NULL);
+//         i = 0;
+//         while (i < slash)
+//         {
+//             ext_name[i] = file[i];
+//             i++;
+//         }
+//         ext_name[i] = '\0';
+//     }
+//     return (ext_name);
+// }
 
 int check_access(char *infile, char *outfile)
 {
@@ -69,22 +69,6 @@ int check_access(char *infile, char *outfile)
     }
     return (0);
 }
-
-// int check_cmd(char *str)
-// {
-//     int i;
-
-//     if (!str)
-//         return (0);
-//     i = 0;
-//     while(str[i])
-//     {
-//         if (!((str[i] >= 32 && str[i] <= 126)))
-//             return (0);
-//         i++;
-//     }
-//     return (1);
-// }
 
 int main(int argc, char *argv[], char **envp)
 {    
