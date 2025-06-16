@@ -6,11 +6,25 @@
 /*   By: hporta-c <hporta-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 14:59:50 by hporta-c          #+#    #+#             */
-/*   Updated: 2025/06/15 11:06:08 by hporta-c         ###   ########.fr       */
+/*   Updated: 2025/06/16 21:52:54 by hporta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+int if_space(char *str)
+{
+    int i;
+    
+    i = 0;
+    while (str[i])
+    {
+        if (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+                return (1);
+        i++;
+    }
+    return (0);
+}
 
 void    error_exit(char *msg)
 {

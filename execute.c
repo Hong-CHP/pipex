@@ -6,7 +6,7 @@
 /*   By: hporta-c <hporta-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 13:40:13 by hporta-c          #+#    #+#             */
-/*   Updated: 2025/06/15 15:12:54 by hporta-c         ###   ########.fr       */
+/*   Updated: 2025/06/16 10:22:58 by hporta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ char    *find_exe_path(char **args, char **ev)
 		}
         path = ft_strjoin(ev_path[i], temp);
         free(temp);
+        fprintf(stderr, "path is %s\n", path);
         if (path)
         {
             if (access(path, X_OK) == 0)
@@ -76,30 +77,42 @@ void    exe_cmd(char *cmd, char **args, char **ev)
     char    *exe_path;
 
     exe_path = NULL;
+    
     if (if_slash(cmd) > 1)
     {
-        if (access(cmd, X_OK) == 0)        
-            exe_path = ft_strdup(cmd);
+        if (if_space(cmd))
+            exe_path = ft_strdup(args[0]);
         else
         {
-            perror("Error");
-            free_split(args);
-            exit(1);
+            if (access(cmd, X_OK) == 0)  
+                exe_path = ft_strdup(cmd);
+            else
+            {
+                perror("Dose not have permissions");
+                free_split(args);
+                exit(1);
+            }
         }
+
     }
     else
     {
         exe_path = find_exe_path(args, ev);
         if (!exe_path)
         {
-            perror("Error");
+            perror("No vailable command or path");
             free_split(args);
             exit(1);
         }
     }
-    execve(exe_path, args, ev);
-    perror("No vailable path");
-    free(exe_path);
+    fprintf(stderr, "exe path is %s\n", exe_path);
+    fprintf(stderr, "je suis arrive ici\n");
+    if (exe_path)
+    {   
+        execve(exe_path, args, ev);
+        perror("No vailable path");
+        free(exe_path);
+    }
     free_split(args);
     exit(1);
 }

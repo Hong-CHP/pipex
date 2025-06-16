@@ -6,7 +6,7 @@
 /*   By: hporta-c <hporta-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 15:49:17 by hporta-c          #+#    #+#             */
-/*   Updated: 2025/06/15 15:04:49 by hporta-c         ###   ########.fr       */
+/*   Updated: 2025/06/16 09:24:00 by hporta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,14 @@ char    **find_sign_then_split(char *str)
     }
     if (sep != 0)
         res = ft_split(str, sep);
+    else
+    {
+        res = malloc(sizeof(char *) * 2);
+        if (!res)
+            return (NULL);
+        res[0] = ft_strdup(str);
+        res[1] = NULL;
+    }
     return (res);
 }
 

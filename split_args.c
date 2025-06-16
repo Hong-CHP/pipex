@@ -6,18 +6,11 @@
 /*   By: hporta-c <hporta-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 16:42:38 by hporta-c          #+#    #+#             */
-/*   Updated: 2025/06/15 12:29:44 by hporta-c         ###   ########.fr       */
+/*   Updated: 2025/06/16 09:41:16 by hporta-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-// int	is_space(char c)
-// {
-// 	if (c == ' ' || (c >= 9 && c <= 13))
-// 			return (1);
-// 	return (0);
-// }
 
 int	count_words(char *str, char c)
 {
